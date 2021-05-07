@@ -9,6 +9,8 @@ MusicPlayer::MusicPlayer(QWidget* parent): QWidget(parent) {
 	volume = new QSlider(parent = this);
 	player = new QMediaPlayer(parent = this);
 	track_info = new PlaylistElementGUI(parent = this);
+	add_track = new QPushButton("Add Track to Playlist", this);
+	remove_track = new QPushButton("Remove Track from Playlist", this);
 
 	buildLayout();
 	connections();
@@ -96,6 +98,8 @@ void MusicPlayer::buildLayout()
 	base_layout->addWidget(next, 0, 4, 1, 2);
 	base_layout->addWidget(track_progress, 1, 0, 1, 6);
 	base_layout->addWidget(volume, 0, 6, 2, 1);
+	base_layout->addWidget(add_track, 0, 7);
+	base_layout->addWidget(remove_track, 1, 7);
 
 	QHBoxLayout* layout = new QHBoxLayout();
 	layout->addWidget(track_info);
@@ -111,6 +115,8 @@ void MusicPlayer::connections()
 	QObject::connect(player, &QMediaPlayer::positionChanged, this, &MusicPlayer::positionChanged);
 	QObject::connect(player, &QMediaPlayer::durationChanged, this, &MusicPlayer::durationChanged);
 	QObject::connect(volume, &QSlider::valueChanged, this, &MusicPlayer::volumeChanged);
+	QObject::connect(add_track, &QPushButton::clicked, this, &MusicPlayer::addTrack);
+	QObject::connect(remove_track, &QPushButton::clicked, this, &MusicPlayer::removeTrack);
 }
 
 //Public Functions
@@ -154,4 +160,11 @@ void MusicPlayer::playOrPause() {
 		this->setPlayIcon();
 		player->pause();
 	}
+}
+
+void MusicPlayer::addTrack() {
+	emit addTrackToPlaylist(track_info->getTrackData());
+}
+void MusicPlayer::removeTrack() {
+	emit removeTrackFromPlaylist(track_info->getTrackData());
 }

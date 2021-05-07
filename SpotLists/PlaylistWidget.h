@@ -23,14 +23,15 @@ public:
 	PlaylistWidget(QWidget* parent = nullptr);
 	PlaylistWidget(PlaylistData p_data, QWidget* parent = nullptr);
 	PlaylistWidget(std::vector<PlaylistElement> p_data, QWidget* parent = nullptr);
-	void loadData(PlaylistData p_data);
+
+	void loadData(PlaylistData& p_data);
 	void loadData(std::vector<PlaylistElement> query_results);
 	void loadData(std::string filepath);
 	void saveData(std::string filepath);
 
 public slots:
-	void addTrack();
-	void removeTrack();
+	void addTrack(PlaylistElement track_data);
+	void removeTrack(PlaylistElement track_data);
 
 signals:
 	//This signal requests the MainWindow to load a track into the Media Player.

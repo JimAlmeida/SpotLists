@@ -109,4 +109,12 @@ PlaylistData PlaylistData::fromJson(QJsonDocument& data) {
 	return PlaylistData(_elements, playlist_name);
 }
 
+void PlaylistData::addTrack(PlaylistElement track_data) {
+	elements.push_back(track_data);
+}
 
+void PlaylistData::removeTrack(PlaylistElement track_data) {
+	//iterator-based item removal
+	auto it = std::find(elements.begin(), elements.end(), track_data); 
+	if (it!=elements.end()){elements.erase(it);}
+}

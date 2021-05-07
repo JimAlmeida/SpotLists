@@ -11,7 +11,7 @@ struct SpotifyImage {
 	std::string small_image;
 };
 
-struct PlaylistElement {
+class PlaylistElement {
 public:
 	//Artist Information
 	std::string artist;
@@ -192,5 +192,9 @@ public:
 		}
 		return pl;
 	}
+	inline bool operator==(const PlaylistElement& rhs) {
+		return this->track_id == rhs.track_id && this->album_id == rhs.album_id && this->artist_id == rhs.artist_id;
+	}
+	inline bool operator!=(const PlaylistElement& rhs) { return !(*this == rhs); }
 };
 

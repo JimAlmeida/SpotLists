@@ -25,23 +25,24 @@ ContentPage::ContentPage(ContentType content_type, std::vector<PlaylistElement> 
 }
 
 void ContentPage::loadData(ContentType content_type, PlaylistData p_data) {
-	playlist_data = p_data;
-	playlist_elements->loadData(playlist_data);
+	if (p_data.size() > 0) {
+		playlist_data = p_data;
+		playlist_elements->loadData(playlist_data);
+		playlist_elements->buildGridLayout(2);
 
-	playlist_elements->buildGridLayout(2);
-
-	std::string image_url;
-	if (content_type == ContentType::TRACK) {
-		image_url = playlist_data[0].album_img.medium_image;
-		std::string album_name = "Album " + playlist_data[0].album;
-		page_title->setText(album_name.c_str());
+		std::string image_url;
+		if (content_type == ContentType::TRACK) {
+			image_url = playlist_data[0].album_img.medium_image;
+			std::string album_name = "Album " + playlist_data[0].album;
+			page_title->setText(album_name.c_str());
+		}
+		else {
+			image_url = playlist_data[0].artist_img.medium_image;
+			std::string artist_name = "Artist " + playlist_data[0].artist;
+			page_title->setText(artist_name.c_str());
+		}
+		content_cover->setPixmap(ImageLoader::loadImageFromURL(image_url, 128));
 	}
-	else {
-		image_url = playlist_data[0].artist_img.medium_image;
-		std::string artist_name = "Artist " + playlist_data[0].artist;
-		page_title->setText(artist_name.c_str());
-	}
-	content_cover->setPixmap(ImageLoader::loadImageFromURL(image_url, 128));
 }
 
 void ContentPage::loadData(ContentType content_type, std::vector<PlaylistElement> p_data) {

@@ -35,7 +35,10 @@ private:
     MusicPlayer* media_player = nullptr;
     TopBar* navigation = nullptr;
     PlaylistWidget* playlist = nullptr;
-    SpotifyFlow api;
+
+
+    IHTTPRequest* http_request;
+    IHTTPDispatcher* http_dispatcher;
 
     QDockWidget* playlist_dock = nullptr;
     QDockWidget* media_dock = nullptr;
@@ -55,5 +58,8 @@ public:
 public slots:
     void openFile();
     void saveFile();
+    void queryFromAPI(std::string query);
+    void requestAlbumContent(PlaylistElement album_data, ContentType type);
+    void requestTrackContent(PlaylistElement album_data, ContentType type);
 };
 #endif // MAINWINDOW_H

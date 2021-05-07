@@ -24,6 +24,9 @@ private:
 	QSlider* track_progress = nullptr;
 	QSlider* volume = nullptr;
 
+	QPushButton* add_track = nullptr;
+	QPushButton* remove_track = nullptr;
+
 	PlaylistElementGUI* track_info = nullptr;
 	
 	void setPlayIcon();
@@ -46,8 +49,8 @@ public:
 	void setTrack(PlaylistElement& track_data);
 
 signals:
-	void addTrackToPlaylist();
-	void removeTrackFromPlaylist();
+	void addTrackToPlaylist(PlaylistElement track_data);
+	void removeTrackFromPlaylist(PlaylistElement track_data);
 
 public slots:
 	void playOrPause();
@@ -55,4 +58,6 @@ public slots:
 	void durationChanged(int duration);
 	void positionChanged(int position);
 	void volumeChanged(int volume);
+	void addTrack();
+	void removeTrack();
 };

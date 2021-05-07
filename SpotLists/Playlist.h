@@ -22,6 +22,8 @@ public:
 	PlaylistElementGUI* operator[](int i);
 	size_t size();
 	void buildListLayout();
+	void clearLayout();
+	void clearElements();
 	void buildGridLayout(int number_of_columns);
 
 public slots:

@@ -217,7 +217,4 @@ namespace GUITests {
         page->setMinimumSize(page->sizeHint());
         return page;
     }
-    PlaylistWidget* playlist() {
-
-    }
 }

@@ -13,10 +13,19 @@ Playlist::Playlist(PlaylistData& _elements, QWidget* parent): QWidget(parent)
 void Playlist::loadData(PlaylistData& _elements) {
 	data = _elements;
 	disconnectAll();
+	clearLayout();
+	clearElements();
 	for (int i = 0; i < _elements.size(); ++i) {
 		playlist.push_back(new PlaylistElementGUI(data[i], this));
 	}
 	connections();
+}
+
+void Playlist::clearElements() {
+	for (int i = 0; i < playlist.size(); ++i) {
+		delete playlist[i];
+	}
+	playlist.clear();
 }
 
 PlaylistElementGUI* Playlist::operator[](int i) {
@@ -47,6 +56,16 @@ void Playlist::buildListLayout() {
 	}
 	this->setLayout(base_layout);
 }
+
+void Playlist::clearLayout() {
+	if (this->layout()) {
+		for (int i = 0; i < playlist.size(); ++i) {
+			this->layout()->removeWidget(playlist[i]);
+		}
+		delete this->layout();
+	}
+}
+
 void Playlist::buildGridLayout(int n_cols) {
 	QGridLayout* base_layout = new QGridLayout();
 	if (n_cols <= 1) {
@@ -69,3 +88,5 @@ void Playlist::buildGridLayout(int n_cols) {
 	}
 }
 
+void Playlist::addTrack() {}
+void Playlist::removeTrack() {}

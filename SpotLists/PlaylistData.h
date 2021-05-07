@@ -5,6 +5,7 @@
 #include <vector>
 #include <QtCore/qfile.h>
 #include <QtCore/qtextstream.h>
+#include <algorithm>
 
 class PlaylistData {
 private:
@@ -22,6 +23,9 @@ private:
 public:
 	PlaylistData();
 	PlaylistData(std::vector<PlaylistElement>& _elements, std::string plist_name="My Playlist");
+
+	void addTrack(PlaylistElement track_data);
+	void removeTrack(PlaylistElement track_data);
 
 	inline std::string getPlaylistName() { return playlist_name; }
 	inline void setPlaylistName(std::string p_name) { playlist_name = p_name; }

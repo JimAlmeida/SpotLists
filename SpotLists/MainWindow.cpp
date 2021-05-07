@@ -13,7 +13,6 @@ MainWindow::MainWindow(QWidget *parent)
     media_player = new MusicPlayer(this);
     navigation = new TopBar(this);
     playlist = new PlaylistWidget(this);
-    api = SpotifyFlow();
 
     playlist_dock = new QDockWidget(this);
     media_dock = new QDockWidget(this);
@@ -50,19 +49,14 @@ void MainWindow::connections() {
     auto sendSong2Player = [&](PlaylistElement& track_data) {media_player->setTrack(track_data); };
     QObject::connect(playlist, &PlaylistWidget::sendSongToPlayer, this, sendSong2Player);
     QObject::connect(search_page, &SearchPage::sendSongToPlayer, this, sendSong2Player);
+    QObject::connect(search_page, &SearchPage::requestContentPage, this, &MainWindow::requestAlbumContent);
+
+    //ContentPage
+    QObject::connect(album_page, &ContentPage::requestContent, this, &MainWindow::requestTrackContent);
     QObject::connect(track_page, &ContentPage::sendSongToPlayer, this, sendSong2Player);
 
-    auto requestAlbumContent = [&](PlaylistElement& album_data) {
-        album_page->loadData(ContentType::TRACK, api.searchAlbumsTracks(album_data)); 
-        page_layout->setCurrentIndex(2); 
-    };
-
-    QObject::connect(search_page, &SearchPage::requestContentPage, this, requestAlbumContent);
-    QObject::connect(album_page, &ContentPage::requestContent, this, requestAlbumContent);
-
-    auto queryFromAPI = [&](std::string q) {search_page->loadData(api.searchByArtist(q), api.searchByTrack(q)); };
-    QObject::connect(navigation, &TopBar::startSearch, this, queryFromAPI);
-
+    //TopBar
+    QObject::connect(navigation, &TopBar::startSearch, this, &MainWindow::queryFromAPI);
     QObject::connect(navigation, &TopBar::openFile, this, &MainWindow::openFile);
     QObject::connect(navigation, &TopBar::saveFile, this, &MainWindow::saveFile);
     
@@ -70,11 +64,30 @@ void MainWindow::connections() {
     QObject::connect(navigation, &TopBar::goBack, this, back);
     auto forward = [&]() {if (page_layout->currentIndex() <= 2) page_layout->setCurrentIndex(page_layout->currentIndex() + 1); };
     QObject::connect(navigation, &TopBar::goForward, this, forward);
+
+    QObject::connect(media_player, &MusicPlayer::addTrackToPlaylist, playlist, &PlaylistWidget::addTrack);
+    QObject::connect(media_player, &MusicPlayer::removeTrackFromPlaylist, playlist, &PlaylistWidget::removeTrack);
 }
 
 void MainWindow::setCustomStyle() {
 
 }
+void MainWindow::queryFromAPI(std::string query) {
+    SpotifyFlow flow;
+    search_page->loadData(flow.searchByArtist(query), flow.searchByTrack(query));
+}
+
+void MainWindow::requestAlbumContent(PlaylistElement album_data, ContentType type) {
+    SpotifyFlow flow;
+    album_page->loadData(ContentType::ALBUM, flow.searchAlbums(album_data));
+    page_layout->setCurrentIndex(1);
+};
+
+void MainWindow::requestTrackContent(PlaylistElement album_data, ContentType type) {
+    SpotifyFlow flow;
+    track_page->loadData(ContentType::TRACK, flow.searchAlbumsTracks(album_data));
+    page_layout->setCurrentIndex(2);
+};
 
 void MainWindow::openFile() {
     QString file_name = QFileDialog::getOpenFileName(this, "Open File");

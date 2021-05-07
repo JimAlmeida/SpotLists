@@ -10,6 +10,7 @@ PlaylistWidget::PlaylistWidget(QWidget* parent) : QWidget(parent)
 
 	//may cause issues of displaying empty content when data is already loaded.
 	playlist_scroll->setWidget(playlist_elements);
+	playlist_scroll->setWidgetResizable(true);
 
 	buildLayout();
 	connections();
@@ -22,11 +23,15 @@ PlaylistWidget::PlaylistWidget(PlaylistData p_data, QWidget* parent): PlaylistWi
 PlaylistWidget::PlaylistWidget(std::vector<PlaylistElement> p_data, QWidget* parent): PlaylistWidget(parent) {
 	loadData(p_data);
 }
-void PlaylistWidget::loadData(PlaylistData p_data) {
+void PlaylistWidget::loadData(PlaylistData& p_data) {
 	std::string n_tracks = std::to_string(p_data.size()) + " tracks";
 
 	playlist_elements->loadData(p_data);
+	playlist_elements->buildListLayout();
+
+	playlist_title->setText(p_data.getPlaylistName().c_str());
 	number_of_tracks->setText(n_tracks.c_str());
+	
 }
 void PlaylistWidget::loadData(std::vector<PlaylistElement> query_results) {
 	playlist_data.loadData(query_results);
@@ -34,8 +39,6 @@ void PlaylistWidget::loadData(std::vector<PlaylistElement> query_results) {
 }
 
 void PlaylistWidget::buildLayout() {
-	playlist_elements->buildListLayout();
-
 	QGridLayout* base_layout = new QGridLayout();
 	base_layout->addWidget(playlist_title, 0, 0);
 	base_layout->addWidget(number_of_tracks, 1, 0, Qt::AlignRight);
@@ -56,4 +59,13 @@ void PlaylistWidget::saveData(std::string filepath) {
 void PlaylistWidget::loadData(std::string filepath) {
 	PlaylistData data = PlaylistData::readPlaylist(filepath.c_str());
 	this->loadData(data);
+}
+
+void PlaylistWidget::addTrack(PlaylistElement track_data) {
+	playlist_data.addTrack(track_data);
+	this->loadData(playlist_data); //could be very computationally expensive 
+}
+void PlaylistWidget::removeTrack(PlaylistElement track_data) {
+	playlist_data.removeTrack(track_data);
+	this->loadData(playlist_data); //could be very computationally expensive 
 }
