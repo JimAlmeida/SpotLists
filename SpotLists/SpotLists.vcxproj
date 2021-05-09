@@ -155,6 +155,7 @@
   <ItemGroup>
     <ClCompile Include="ContentPage.cpp" />
     <ClCompile Include="ImageLoader.cpp" />
+    <ClCompile Include="MediaControls.cpp" />
     <ClCompile Include="MusicPlayer.cpp" />
     <ClCompile Include="Playlist.cpp" />
     <ClCompile Include="PlaylistData.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="IHTTPRequest.h" />
     <ClInclude Include="ImageLoader.h" />
     <QtMoc Include="MusicPlayer.h" />
+    <QtMoc Include="MediaControls.h" />
     <ClInclude Include="NetworkReply.h" />
     <QtMoc Include="Playlist.h" />
     <ClInclude Include="PlaylistData.h" />

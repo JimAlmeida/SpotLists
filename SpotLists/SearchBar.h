@@ -1,6 +1,6 @@
 #pragma once
 #include <qwidget.h>
-#include <qmediaplayer.h>
+#include <QtMultimedia/qmediaplayer.h>
 #include <qpushbutton.h>
 #include <qtoolbutton.h>
 #include <qradiobutton.h>
@@ -19,8 +19,7 @@ private:
 	QLineEdit* search_box = nullptr;
 	QRadioButton* search_by_track = nullptr;
 	QRadioButton* search_by_artist = nullptr;
-	QLabel* search_label = nullptr;
-	QLabel* query_label = nullptr;
+	QLabel* logo_label = nullptr;
 	QString std_label;
 
 	QToolButton* open_file = nullptr;
@@ -41,7 +40,4 @@ signals:
 	void saveFile();
 	void goBack();
 	void goForward();
-
-public slots:
-	void textEdited(QString text);
 };

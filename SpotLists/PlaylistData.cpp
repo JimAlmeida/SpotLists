@@ -24,6 +24,7 @@ size_t PlaylistData::size() {
 }
 
 PlaylistData PlaylistData::readPlaylist(const char* filename) {
+	//takes filename without extension
 	QByteArray raw_data = PlaylistData::readFromDisk(filename);
 	QJsonDocument decoded_json_data = PlaylistData::fromBase64(raw_data);
 	QJsonObject root = decoded_json_data.object();
@@ -66,7 +67,9 @@ QByteArray PlaylistData::toBase64(QJsonDocument& json_data) {
 }
 
 bool PlaylistData::saveToDisk(const char* filename, QByteArray& data) {
-	//takes filename with extension
+	//takes filename without extension
+	//adds extension belo
+
 	QFile file(filename);
 	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
 		return false;
@@ -110,10 +113,16 @@ PlaylistData PlaylistData::fromJson(QJsonDocument& data) {
 }
 
 void PlaylistData::addTrack(PlaylistElement track_data) {
-	elements.push_back(track_data);
+	qDebug() << "PlaylistData::addTrack()";
+	qDebug() << track_data.display().c_str();
+	auto it = std::find(elements.begin(), elements.end(), track_data);
+	if (it == elements.end()) { elements.push_back(track_data); }
+	
 }
 
 void PlaylistData::removeTrack(PlaylistElement track_data) {
+	qDebug() << "PlaylistData::removeTrack()";
+	qDebug() << track_data.display().c_str();
 	//iterator-based item removal
 	auto it = std::find(elements.begin(), elements.end(), track_data); 
 	if (it!=elements.end()){elements.erase(it);}

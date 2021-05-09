@@ -9,6 +9,8 @@
 #include <qstackedlayout.h>
 #include <qtoolbar.h>
 #include <qfiledialog.h>
+#include <qguiapplication.h>
+#include <qscreen.h>
 
 #include "SearchPage.h"
 #include "ContentPage.h"
@@ -35,7 +37,7 @@ private:
     MusicPlayer* media_player = nullptr;
     TopBar* navigation = nullptr;
     PlaylistWidget* playlist = nullptr;
-
+    QSize window_size;
 
     IHTTPRequest* http_request;
     IHTTPDispatcher* http_dispatcher;

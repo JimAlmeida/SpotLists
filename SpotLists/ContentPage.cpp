@@ -33,12 +33,12 @@ void ContentPage::loadData(ContentType content_type, PlaylistData p_data) {
 		std::string image_url;
 		if (content_type == ContentType::TRACK) {
 			image_url = playlist_data[0].album_img.medium_image;
-			std::string album_name = "Album " + playlist_data[0].album;
+			std::string album_name = playlist_data[0].album;
 			page_title->setText(album_name.c_str());
 		}
 		else {
 			image_url = playlist_data[0].artist_img.medium_image;
-			std::string artist_name = "Artist " + playlist_data[0].artist;
+			std::string artist_name = playlist_data[0].artist;
 			page_title->setText(artist_name.c_str());
 		}
 		content_cover->setPixmap(ImageLoader::loadImageFromURL(image_url, 128));
@@ -57,8 +57,8 @@ void ContentPage::loadContent(ContentType content_type, PlaylistData data) {
 void ContentPage::buildLayout() {
 	QGridLayout* base_layout = new QGridLayout();
 	base_layout->addWidget(content_cover, 0, 0, Qt::AlignLeft);
-	base_layout->addWidget(page_title, 0, 1, Qt::AlignRight);
-	base_layout->addWidget(scroller, 1, 0, 1, 2);
+	base_layout->addWidget(page_title, 0, 1, Qt::AlignLeft);
+	base_layout->addWidget(scroller, 1, 0, 1, 10);
 
 	this->setLayout(base_layout);
 }
@@ -75,4 +75,13 @@ void ContentPage::elementSelected(PlaylistElement data) {
 		emit sendSongToPlayer(data);
 	}
 }
-void ContentPage::setCustomStyle() {}
+void ContentPage::setCustomStyle() {
+	scroller->setStyleSheet("background-color: #11140e; border:none;");
+	content_cover->setStyleSheet("border-radius: 15px");
+
+	QFont title_font;
+	title_font.setPixelSize(36);
+	title_font.setBold(true);
+	title_font.setFamily("Tw Cen MT Condensed");
+	page_title->setFont(title_font);
+}

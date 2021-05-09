@@ -2,12 +2,8 @@
 
 //Constructors
 MusicPlayer::MusicPlayer(QWidget* parent): QWidget(parent) {
-	play = new QToolButton(parent = this);
-	previous = new QToolButton(parent = this);
-	next = new QToolButton(parent = this);
-	track_progress = new QSlider(parent = this);
-	volume = new QSlider(parent = this);
-	player = new QMediaPlayer(parent = this);
+	player = new QMediaPlayer(this);
+	media_controls = new MediaControls(player, this);
 	track_info = new PlaylistElementGUI(parent = this);
 	add_track = new QPushButton("Add Track to Playlist", this);
 	remove_track = new QPushButton("Remove Track from Playlist", this);
@@ -15,37 +11,6 @@ MusicPlayer::MusicPlayer(QWidget* parent): QWidget(parent) {
 	buildLayout();
 	connections();
 	setCustomStyle();
-
-	volume->setOrientation(Qt::Vertical);
-	volume->setRange(0, 100);
-	volume->setValue(100);
-
-	track_progress->setOrientation(Qt::Horizontal);
-	track_progress->setTracking(false); //only change the song when the user releases the slider. This is standard in Spotify's own application.
-	track_progress->setMaximum(player->duration());
-}
-
-MusicPlayer::MusicPlayer(std::string& url, QWidget* parent) : QWidget(parent)
-{
-	play = new QToolButton(parent = this);
-	previous = new QToolButton(parent = this);
-	next = new QToolButton(parent = this);
-
-	track_progress = new QSlider(parent = this);
-	volume = new QSlider(parent = this);
-
-	player = SoundLoader::loadSongFromURL(url);
-}
-
-MusicPlayer::MusicPlayer(QMediaPlayer* media, QWidget* parent) : QWidget(parent)
-{
-	play = new QToolButton(parent = this);
-	previous = new QToolButton(parent = this);
-	next = new QToolButton(parent = this);
-
-	track_progress = new QSlider(parent = this);
-	volume = new QSlider(parent = this);
-	player = media;
 }
 
 MusicPlayer::MusicPlayer(PlaylistElement& track_data, QWidget* parent) : MusicPlayer(parent)
@@ -54,80 +19,58 @@ MusicPlayer::MusicPlayer(PlaylistElement& track_data, QWidget* parent) : MusicPl
 }
 
 //Internal Private Methods
-void MusicPlayer::setPlayIcon() {
-	play->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
-}
-
-void MusicPlayer::setPauseIcon() {
-	play->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
-}
-
-void MusicPlayer::setForwardIcon(){
-	next->setIcon(style()->standardIcon(QStyle::SP_MediaSkipForward));
-}
-
-void MusicPlayer::setBackwardIcon() {
-	previous->setIcon(style()->standardIcon(QStyle::SP_MediaSkipBackward));
-}
 
 void MusicPlayer::setCustomStyle() {
-	this->setStyleSheet("background-color: #181818; color: white");
-
-	play->setStyleSheet("background-color: #585858; border: none");
-	play->setMinimumWidth(2 * play->sizeHint().width());
-	play->setMinimumHeight(1.5 * play->sizeHint().height());
-
-	previous->setStyleSheet("background-color: #585858; border: none");
-	previous->setMinimumWidth(2 * previous->sizeHint().width());
-	previous->setMinimumHeight(1.5 * previous->sizeHint().height());
-
-	next->setStyleSheet("background-color: #585858; border: none");
-	next->setMinimumWidth(2 * next->sizeHint().width());
-	next->setMinimumHeight(1.5 * next->sizeHint().height());
-
-	this->setPlayIcon();
-	this->setBackwardIcon();
-	this->setForwardIcon();
+	this->setStyleSheet("background-color: #131511; color: white");
+	
+	media_controls->setMaximumSize(media_controls->sizeHint());
+	add_track->setStyleSheet("background-color: #233517; color: white");
+	remove_track->setStyleSheet("background-color: #233517; color: white");
 }
 
 void MusicPlayer::buildLayout()
 {
-	QGridLayout* base_layout = new QGridLayout();
-	base_layout->addWidget(previous, 0, 0, 1, 2);
-	base_layout->addWidget(play, 0, 2, 1, 2);
-	base_layout->addWidget(next, 0, 4, 1, 2);
-	base_layout->addWidget(track_progress, 1, 0, 1, 6);
-	base_layout->addWidget(volume, 0, 6, 2, 1);
-	base_layout->addWidget(add_track, 0, 7);
-	base_layout->addWidget(remove_track, 1, 7);
+	QWidget* right_spacer = new QWidget();
+
+	QVBoxLayout* playlist_controls = new QVBoxLayout();
+	playlist_controls->addWidget(add_track);
+	playlist_controls->addWidget(remove_track);
 
 	QHBoxLayout* layout = new QHBoxLayout();
-	layout->addWidget(track_info);
-	layout->addLayout(base_layout);
+	layout->addWidget(track_info, 1);
+	layout->addWidget(media_controls, 1,Qt::AlignCenter);
+	layout->addWidget(right_spacer, 1);
+	layout->addLayout(playlist_controls, 1);
 
+	int w1 = add_track->sizeHint().width();
+	int w2 = remove_track->sizeHint().width();
+	int maximum_button_width = (w1 >= w2) ? w1 : w2;
+	add_track->setMaximumWidth(maximum_button_width*1.1);
+	remove_track->setMaximumWidth(maximum_button_width*1.1);
+	add_track->setSizePolicy(QSizePolicy::Policy::Maximum, QSizePolicy::Policy::MinimumExpanding);
+	remove_track->setSizePolicy(QSizePolicy::Policy::Maximum, QSizePolicy::Policy::MinimumExpanding);
 	this->setLayout(layout);
+	this->setSizePolicy(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Fixed);
 }
 
 void MusicPlayer::connections()
 {
-	QObject::connect(play, &QToolButton::clicked, this, &MusicPlayer::playOrPause);
-	QObject::connect(track_progress, &QSlider::valueChanged, this, &MusicPlayer::sliderValueChanged);
-	QObject::connect(player, &QMediaPlayer::positionChanged, this, &MusicPlayer::positionChanged);
-	QObject::connect(player, &QMediaPlayer::durationChanged, this, &MusicPlayer::durationChanged);
-	QObject::connect(volume, &QSlider::valueChanged, this, &MusicPlayer::volumeChanged);
 	QObject::connect(add_track, &QPushButton::clicked, this, &MusicPlayer::addTrack);
 	QObject::connect(remove_track, &QPushButton::clicked, this, &MusicPlayer::removeTrack);
+	QObject::connect(player, &QMediaPlayer::positionChanged, media_controls, &MediaControls::positionChanged);
+	QObject::connect(player, &QMediaPlayer::durationChanged, media_controls, &MediaControls::durationChanged);
 }
 
 //Public Functions
 void MusicPlayer::setTrack(PlaylistElement& track_data)
 {
+	player->stop();
 	player->setMedia(QUrl(track_data.sample_url.c_str()));
 	track_info->loadData(track_data);
 }
 
 //Slots
-void MusicPlayer::sliderValueChanged(int value) {
+/*void MusicPlayer::sliderValueChanged(int value) {
 	qDebug() << "My value is: " << value << "And my duration: " << player->position();
 	if (value/100 != player->position()/100) {
 		player->setPosition(value);
@@ -161,7 +104,7 @@ void MusicPlayer::playOrPause() {
 		player->pause();
 	}
 }
-
+*/
 void MusicPlayer::addTrack() {
 	emit addTrackToPlaylist(track_info->getTrackData());
 }

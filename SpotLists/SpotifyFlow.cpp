@@ -46,14 +46,16 @@ std::vector<PlaylistElement> SpotifyFlow::searchAlbums(PlaylistElement& element)
 std::vector<PlaylistElement> SpotifyFlow::searchAlbumsTracks(PlaylistElement& element) {
 	std::string bearer = obtainToken();
 
-	auto raw_search_results = api->getAlbumTracks(element.album_id, bearer);
+	auto raw_search_results = api->getAlbumTracks(element.album_id, bearer, "US");
 	std::vector<PlaylistElement> album_tracks = SpotifyFilter::filterGetAlbumTracksEndpoint(raw_search_results, element);
 
 	return album_tracks;
 }
 
 std::string SpotifyFlow::obtainToken() {
-	auto raw_token_results = api->getAccessToken();
-	std::string bearer_token = SpotifyFilter::filterATEndpoint(raw_token_results);
+	if (bearer_token.empty()) {
+		auto raw_token_results = api->getAccessToken();
+		bearer_token = SpotifyFilter::filterATEndpoint(raw_token_results);
+	}
 	return bearer_token;
 }

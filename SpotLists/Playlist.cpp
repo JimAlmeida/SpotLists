@@ -52,8 +52,13 @@ void Playlist::disconnectAll() {
 void Playlist::buildListLayout() {
 	QGridLayout* base_layout = new QGridLayout();
 	for (int i = 0; i < playlist.size(); ++i) {
+		playlist[i]->setSizePolicy(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Fixed);
 		base_layout->addWidget(playlist[i], i, 0, Qt::AlignLeft);
 	}
+	QWidget* spacer = new QWidget(this);
+	spacer->setSizePolicy(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Expanding);
+	base_layout->addWidget(spacer, playlist.size(), 0);
+	
 	this->setLayout(base_layout);
 }
 
@@ -84,9 +89,18 @@ void Playlist::buildGridLayout(int n_cols) {
 				}
 			}
 		}
+
+		QWidget* spacer = new QWidget(this);
+		spacer->setSizePolicy(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Expanding);
+		base_layout->addWidget(spacer, n_rows, 0, 1, n_cols);
+
 		this->setLayout(base_layout);
 	}
 }
 
-void Playlist::addTrack() {}
-void Playlist::removeTrack() {}
+void Playlist::addTrack() {
+
+}
+void Playlist::removeTrack() {
+
+}

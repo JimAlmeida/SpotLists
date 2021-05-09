@@ -1,4 +1,7 @@
 <RCC>
-    <qresource prefix="SpotLists">
+    <qresource prefix="/SpotLists">
+        <file>Logo.png</file>
+        <file>Icon.ico</file>
+        <file>Icon.png</file>
     </qresource>
 </RCC>

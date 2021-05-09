@@ -6,6 +6,9 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     this->setWindowTitle("Spotlists v1.0");
+    QScreen* viewport = QGuiApplication::primaryScreen();
+
+    window_size = QSize(viewport->geometry().width(), viewport->geometry().height());
 
     search_page = new SearchPage(this);
     album_page = new ContentPage(ContentType::ALBUM, this);
@@ -30,6 +33,7 @@ MainWindow::~MainWindow(){}
 
 void MainWindow::buildLayout()
 {
+    page_layout->addWidget(new QWidget());
     page_layout->addWidget(search_page);
     page_layout->addWidget(album_page);
     page_layout->addWidget(track_page);
@@ -38,10 +42,17 @@ void MainWindow::buildLayout()
 
 void MainWindow::setUpComponents() {
     this->setCentralWidget(central_widget);
+    
     playlist_dock->setWidget(playlist);
+    playlist_dock->setMinimumWidth(window_size.width() * 0.15);
+    playlist_dock->setTitleBarWidget(new QWidget()); //I don't want no title bar.
+    
     media_dock->setWidget(media_player);
+    media_dock->setTitleBarWidget(new QWidget()); //I don't want no title bar.
+
     this->addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, playlist_dock);
     this->addDockWidget(Qt::DockWidgetArea::BottomDockWidgetArea, media_dock);
+    
     this->addToolBar(navigation);
 }
 
@@ -70,33 +81,37 @@ void MainWindow::connections() {
 }
 
 void MainWindow::setCustomStyle() {
-
+    this->setWindowIcon(QIcon("images/Icon.png"));
+    this->setStyleSheet("background-color: #131511; color: white");
 }
 void MainWindow::queryFromAPI(std::string query) {
     SpotifyFlow flow;
     search_page->loadData(flow.searchByArtist(query), flow.searchByTrack(query));
+    page_layout->setCurrentIndex(1);
 }
 
-void MainWindow::requestAlbumContent(PlaylistElement album_data, ContentType type) {
+void MainWindow::requestAlbumContent(PlaylistElement artist_data, ContentType type) {
     SpotifyFlow flow;
-    album_page->loadData(ContentType::ALBUM, flow.searchAlbums(album_data));
-    page_layout->setCurrentIndex(1);
+    album_page->loadData(ContentType::ALBUM, flow.searchAlbums(artist_data));
+    page_layout->setCurrentIndex(2);
 };
 
 void MainWindow::requestTrackContent(PlaylistElement album_data, ContentType type) {
     SpotifyFlow flow;
     track_page->loadData(ContentType::TRACK, flow.searchAlbumsTracks(album_data));
-    page_layout->setCurrentIndex(2);
+    page_layout->setCurrentIndex(3);
 };
 
 void MainWindow::openFile() {
-    QString file_name = QFileDialog::getOpenFileName(this, "Open File");
+    QString allowed_file_extensions = "Playlist Files (*.playlist);;";
+    QString file_name = QFileDialog::getOpenFileName(this, "Open File", QString(), allowed_file_extensions);
     if (!file_name.isEmpty()) {
         playlist->loadData(file_name.toStdString());
     }
 }
 void MainWindow::saveFile() {
-    QString file_name = QFileDialog::getSaveFileName(this, "Save File");
+    QString allowed_file_extensions = "Playlist Files (*.playlist);;";
+    QString file_name = QFileDialog::getSaveFileName(this, "Save File", QString(), allowed_file_extensions);
     if (!file_name.isEmpty()) {
         playlist->saveData(file_name.toStdString());
     }

@@ -11,7 +11,7 @@ struct SpotifyImage {
 	std::string small_image;
 };
 
-class PlaylistElement {
+struct PlaylistElement {
 public:
 	//Artist Information
 	std::string artist;

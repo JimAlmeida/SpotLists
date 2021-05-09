@@ -1,11 +1,11 @@
 #pragma once
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QLabel>
-#include "PlaylistElement.h"
 #include "ImageLoader.h"
 #include <QtWidgets/qboxlayout.h>
 #include <QtWidgets/qgridlayout.h>
 #include <qfont.h>
+#include "PlaylistElement.h"
 
 class PlaylistElementGUI: public QWidget {
 	Q_OBJECT

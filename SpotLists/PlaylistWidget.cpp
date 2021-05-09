@@ -24,6 +24,7 @@ PlaylistWidget::PlaylistWidget(std::vector<PlaylistElement> p_data, QWidget* par
 	loadData(p_data);
 }
 void PlaylistWidget::loadData(PlaylistData& p_data) {
+	playlist_data = p_data;
 	std::string n_tracks = std::to_string(p_data.size()) + " tracks";
 
 	playlist_elements->loadData(p_data);
@@ -62,10 +63,15 @@ void PlaylistWidget::loadData(std::string filepath) {
 }
 
 void PlaylistWidget::addTrack(PlaylistElement track_data) {
+	qDebug() << "PlaylistWidget::addTrack()";
+	qDebug() << track_data.display().c_str();
 	playlist_data.addTrack(track_data);
 	this->loadData(playlist_data); //could be very computationally expensive 
 }
 void PlaylistWidget::removeTrack(PlaylistElement track_data) {
+	qDebug() << "PlaylistWidget::removeTrack()";
+	qDebug() << track_data.display().c_str();
+
 	playlist_data.removeTrack(track_data);
 	this->loadData(playlist_data); //could be very computationally expensive 
 }

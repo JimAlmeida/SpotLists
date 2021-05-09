@@ -85,6 +85,9 @@
     <ClCompile Include="PlaylistData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MediaControls.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SpotifyAPI.h">
@@ -156,6 +159,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Playlist.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="MediaControls.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

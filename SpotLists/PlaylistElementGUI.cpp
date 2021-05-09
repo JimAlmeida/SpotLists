@@ -25,16 +25,22 @@ void PlaylistElementGUI::loadData(const PlaylistElement& data) {
 	track->setText(data.track.c_str());
 
 	//#########################################################################################
+	//If track name is not avaliable, load album name
+	if (data.track.empty())
+	track->setText(data.album.c_str());
+	
 	//Loading Image...
 	QPixmap cover_image;
 
-	bool check1 = !data.album_img.small_image.empty();
 	//If there is an url for an album cover, then I'll load it. Otherwise I'll use the Artist cover instead. Album takes precedence over artist.
 	if (!data.album_img.small_image.empty()) {
 		cover_image = ImageLoader::loadImageFromURL(data.album_img.small_image);
 	}
-	else {
+	else if(!data.artist_img.small_image.empty()){
 		cover_image = ImageLoader::loadImageFromURL(data.artist_img.small_image);
+	}
+	else {
+		cover_image = QPixmap("images/blankcover.png");
 	}
 
 	cover->setPixmap(cover_image);
@@ -74,13 +80,17 @@ void PlaylistElementGUI::mouseReleaseEvent(QMouseEvent* event) {
 }
 
 void PlaylistElementGUI::buildlayout() {
+	track->setSizePolicy(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Preferred);
+	artist->setSizePolicy(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Preferred);
+	cover->setSizePolicy(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Preferred);
+
 	QVBoxLayout* description_layout = new QVBoxLayout();
 	description_layout->addWidget(track);
 	description_layout->addWidget(artist);
 
 	QHBoxLayout* base_layout = new QHBoxLayout();
 	base_layout->addWidget(cover);
-	base_layout->addLayout(description_layout);
+	base_layout->addLayout(description_layout, 1);
 
 	this->setLayout(base_layout);
 }
@@ -97,6 +107,7 @@ void PlaylistElementGUI::setCustomStyle()
 
 	track->setFont(track_font);
 	artist->setFont(artist_font);
+	cover->setPixmap(QPixmap("images/blankcover.png"));
 }
 
 PlaylistElement PlaylistElementGUI::getTrackData() {

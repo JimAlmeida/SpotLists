@@ -12,7 +12,7 @@ private:
 	IHTTPRequest* r;
 	IHTTPDispatcher* d;
 	SpotifyAPI* api;
-
+	std::string bearer_token;
 public:
 	SpotifyFlow();
 	SpotifyFlow(IHTTPDispatcher* dispatcher, IHTTPRequest* request);

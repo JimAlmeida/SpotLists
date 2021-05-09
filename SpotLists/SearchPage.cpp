@@ -4,7 +4,7 @@ SearchPage::SearchPage(QWidget* parent): QWidget(parent)
 {
 	artist_results = PlaylistData();
 	track_results = PlaylistData();
-	title = new QLabel("Search Results", this);
+	title = new QLabel("SEARCH RESULTS", this);
 	artist_section_title = new QLabel("Artist", this);
 	track_section_title = new QLabel("Track", this);
 	artist_scroll = new QScrollArea(this);
@@ -49,7 +49,7 @@ void SearchPage::loadData(std::vector<PlaylistElement> _artist_results, std::vec
 
 void SearchPage::buildLayout() {
 	QGridLayout* base_layout = new QGridLayout();
-	base_layout->addWidget(title, 0, 0, 1, 2, Qt::AlignCenter);
+	base_layout->addWidget(title, 0, 0, 1, 2, Qt::AlignLeft);
 	base_layout->addWidget(artist_section_title, 1, 0, 1, 1, Qt::AlignLeft);
 	base_layout->addWidget(track_section_title, 1, 1, 1, 1, Qt::AlignLeft);
 	base_layout->addWidget(artist_scroll, 2, 0, 1, 1);
@@ -63,4 +63,17 @@ void SearchPage::connections() {
 	QObject::connect(artist_elements, &Playlist::elementSelected, this, [=](PlaylistElement data) {emit requestContentPage(data, ContentType::TRACK); });
 	QObject::connect(track_elements, &Playlist::elementSelected, this, [=](PlaylistElement data) {emit sendSongToPlayer(data); });
 }
-void SearchPage::setCustomStyle() {}
+void SearchPage::setCustomStyle() {
+	QFont title_font;
+	title_font.setPixelSize(24);
+	title_font.setBold(true);
+	title_font.setFamily("Tw Cen MT Condensed");
+	title->setFont(title_font);
+
+	QFont section_font;
+	section_font.setPixelSize(16);
+	section_font.setBold(true);
+	section_font.setFamily("Arial Narrow");
+	artist_section_title->setFont(section_font);
+	track_section_title->setFont(section_font);
+}
