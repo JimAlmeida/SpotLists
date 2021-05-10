@@ -63,5 +63,9 @@ public slots:
     void queryFromAPI(std::string query);
     void requestAlbumContent(PlaylistElement album_data, ContentType type);
     void requestTrackContent(PlaylistElement album_data, ContentType type);
+    void sendSong2Player(PlaylistElement track_data);
+    void sendPlaylist2Player(PlaylistElement selected_element, PlaylistData data);
+    void navigateBack();
+    void navigateForward();
 };
 #endif // MAINWINDOW_H

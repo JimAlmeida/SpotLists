@@ -36,4 +36,5 @@ public slots:
 signals:
 	//This signal requests the MainWindow to load a track into the Media Player.
 	void sendSongToPlayer(PlaylistElement data);
+	void sendPlaylistToPlayer(PlaylistElement selected_element, PlaylistData data);
 };

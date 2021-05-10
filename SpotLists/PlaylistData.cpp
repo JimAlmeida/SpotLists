@@ -113,17 +113,25 @@ PlaylistData PlaylistData::fromJson(QJsonDocument& data) {
 }
 
 void PlaylistData::addTrack(PlaylistElement track_data) {
-	qDebug() << "PlaylistData::addTrack()";
-	qDebug() << track_data.display().c_str();
-	auto it = std::find(elements.begin(), elements.end(), track_data);
-	if (it == elements.end()) { elements.push_back(track_data); }
+	//If what is passed as an arg. is an empty track, then there is nothing else to be done.
+	if (!track_data.track.empty()) {
+		auto it = std::find(elements.begin(), elements.end(), track_data); // finds if track is already in playlist
+		if (it == elements.end()) { elements.push_back(track_data); }
+	}
 	
+}
+int PlaylistData::findTrack(std::string track_id) {
+	for (int j = 0; j < elements.size(); ++j) {
+		if (elements[j].track_id == track_id) { return j; }
+	}
+	return -1;
 }
 
 void PlaylistData::removeTrack(PlaylistElement track_data) {
-	qDebug() << "PlaylistData::removeTrack()";
-	qDebug() << track_data.display().c_str();
-	//iterator-based item removal
-	auto it = std::find(elements.begin(), elements.end(), track_data); 
-	if (it!=elements.end()){elements.erase(it);}
+	//If what is passed as an arg. is an empty track, then there is nothing else to be done.
+	if (!track_data.track.empty()) {
+		//iterator-based item removal
+		auto it = std::find(elements.begin(), elements.end(), track_data); // finds if track is in playlist
+		if (it != elements.end()) { elements.erase(it); }
+	}
 }

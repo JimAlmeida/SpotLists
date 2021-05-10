@@ -97,10 +97,3 @@ void Playlist::buildGridLayout(int n_cols) {
 		this->setLayout(base_layout);
 	}
 }
-
-void Playlist::addTrack() {
-
-}
-void Playlist::removeTrack() {
-
-}

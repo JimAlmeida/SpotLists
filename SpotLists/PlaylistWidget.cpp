@@ -16,13 +16,37 @@ PlaylistWidget::PlaylistWidget(QWidget* parent) : QWidget(parent)
 	connections();
 	setCustomStyle();
 }
-
 PlaylistWidget::PlaylistWidget(PlaylistData p_data, QWidget* parent): PlaylistWidget(parent){
 	loadData(p_data);
 }
 PlaylistWidget::PlaylistWidget(std::vector<PlaylistElement> p_data, QWidget* parent): PlaylistWidget(parent) {
 	loadData(p_data);
 }
+void PlaylistWidget::buildLayout() {
+	QGridLayout* base_layout = new QGridLayout();
+	base_layout->addWidget(playlist_title, 0, 0);
+	base_layout->addWidget(number_of_tracks, 1, 0, Qt::AlignRight);
+	base_layout->addWidget(playlist_scroll, 2, 0);
+
+	this->setLayout(base_layout);
+}
+void PlaylistWidget::connections() {
+	QObject::connect(playlist_elements, &Playlist::elementSelected, this, [=](PlaylistElement data) {emit sendSongToPlayer(data); });
+	QObject::connect(playlist_elements, &Playlist::elementSelected, this, [=](PlaylistElement selected_element) {emit sendPlaylistToPlayer(selected_element, playlist_data); });
+}
+void PlaylistWidget::setCustomStyle() {
+	QFont title_font;
+	title_font.setPixelSize(24);
+	title_font.setBold(true);
+	title_font.setFamily("Tw Cen MT Condensed");
+	playlist_title->setFont(title_font);
+
+	QFont subtitle_font;
+	subtitle_font.setPixelSize(16);
+	subtitle_font.setFamily("Tw Cen MT Condensed");
+	number_of_tracks->setFont(subtitle_font);
+}
+
 void PlaylistWidget::loadData(PlaylistData& p_data) {
 	playlist_data = p_data;
 	std::string n_tracks = std::to_string(p_data.size()) + " tracks";
@@ -38,29 +62,15 @@ void PlaylistWidget::loadData(std::vector<PlaylistElement> query_results) {
 	playlist_data.loadData(query_results);
 	this->loadData(playlist_data);
 }
-
-void PlaylistWidget::buildLayout() {
-	QGridLayout* base_layout = new QGridLayout();
-	base_layout->addWidget(playlist_title, 0, 0);
-	base_layout->addWidget(number_of_tracks, 1, 0, Qt::AlignRight);
-	base_layout->addWidget(playlist_scroll, 2, 0);
-
-	this->setLayout(base_layout);
+void PlaylistWidget::loadData(std::string filepath) {
+	PlaylistData data = PlaylistData::readPlaylist(filepath.c_str());
+	this->loadData(data);
 }
-void PlaylistWidget::connections() {
-	QObject::connect(playlist_elements, &Playlist::elementSelected, this, [=](PlaylistElement data) {emit sendSongToPlayer(data); });
-}
-
-void PlaylistWidget::setCustomStyle() {}
 
 void PlaylistWidget::saveData(std::string filepath) {
 	PlaylistData::savePlaylist(filepath.c_str(), playlist_data);
 }
 
-void PlaylistWidget::loadData(std::string filepath) {
-	PlaylistData data = PlaylistData::readPlaylist(filepath.c_str());
-	this->loadData(data);
-}
 
 void PlaylistWidget::addTrack(PlaylistElement track_data) {
 	qDebug() << "PlaylistWidget::addTrack()";

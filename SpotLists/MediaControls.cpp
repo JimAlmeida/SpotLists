@@ -105,6 +105,8 @@ void MediaControls::connections()
 	QObject::connect(play, &QToolButton::clicked, this, &MediaControls::playOrPause);
 	QObject::connect(track_progress, &QSlider::valueChanged, this, &MediaControls::sliderValueChanged);
 	QObject::connect(volume, &QSlider::valueChanged, this, &MediaControls::volumeChanged);
+	QObject::connect(next, &QToolButton::clicked, this, &MediaControls::requestNextTrack);
+	QObject::connect(previous, &QToolButton::clicked, this, &MediaControls::requestPreviousTrack);
 }
 
 //Public Functions
@@ -138,14 +140,21 @@ void MediaControls::positionChanged(int position) {
 void MediaControls::volumeChanged(int volume) {
 	player->setVolume(volume);
 }
-
 void MediaControls::playOrPause() {
 	if (player->state() == QMediaPlayer::State::PausedState || player->state() == QMediaPlayer::State::StoppedState) {
-		this->setPauseIcon();
 		player->play();
+		setPauseIcon();
 	}
 	else {
-		this->setPlayIcon();
 		player->pause();
+		setPlayIcon();
 	}
+}
+
+
+void MediaControls::requestNextTrack() {
+	emit nextTrack();
+}
+void MediaControls::requestPreviousTrack() {
+	emit previousTrack();
 }

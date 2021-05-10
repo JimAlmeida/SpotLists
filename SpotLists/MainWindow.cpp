@@ -57,24 +57,22 @@ void MainWindow::setUpComponents() {
 }
 
 void MainWindow::connections() {
-    auto sendSong2Player = [&](PlaylistElement& track_data) {media_player->setTrack(track_data); };
-    QObject::connect(playlist, &PlaylistWidget::sendSongToPlayer, this, sendSong2Player);
-    QObject::connect(search_page, &SearchPage::sendSongToPlayer, this, sendSong2Player);
+    
+    QObject::connect(playlist, &PlaylistWidget::sendPlaylistToPlayer, this, &MainWindow::sendPlaylist2Player);
+    QObject::connect(search_page, &SearchPage::sendSongToPlayer, this, &MainWindow::sendSong2Player);
     QObject::connect(search_page, &SearchPage::requestContentPage, this, &MainWindow::requestAlbumContent);
 
     //ContentPage
     QObject::connect(album_page, &ContentPage::requestContent, this, &MainWindow::requestTrackContent);
-    QObject::connect(track_page, &ContentPage::sendSongToPlayer, this, sendSong2Player);
+    QObject::connect(track_page, &ContentPage::sendSongToPlayer, this, &MainWindow::sendSong2Player);
 
     //TopBar
     QObject::connect(navigation, &TopBar::startSearch, this, &MainWindow::queryFromAPI);
     QObject::connect(navigation, &TopBar::openFile, this, &MainWindow::openFile);
     QObject::connect(navigation, &TopBar::saveFile, this, &MainWindow::saveFile);
     
-    auto back = [&]() {if (page_layout->currentIndex() >= 1) page_layout->setCurrentIndex(page_layout->currentIndex() - 1); };
-    QObject::connect(navigation, &TopBar::goBack, this, back);
-    auto forward = [&]() {if (page_layout->currentIndex() <= 2) page_layout->setCurrentIndex(page_layout->currentIndex() + 1); };
-    QObject::connect(navigation, &TopBar::goForward, this, forward);
+    QObject::connect(navigation, &TopBar::goBack, this, &MainWindow::navigateBack);
+    QObject::connect(navigation, &TopBar::goForward, this, &MainWindow::navigateForward);
 
     QObject::connect(media_player, &MusicPlayer::addTrackToPlaylist, playlist, &PlaylistWidget::addTrack);
     QObject::connect(media_player, &MusicPlayer::removeTrackFromPlaylist, playlist, &PlaylistWidget::removeTrack);
@@ -84,29 +82,45 @@ void MainWindow::setCustomStyle() {
     this->setWindowIcon(QIcon("images/Icon.png"));
     this->setStyleSheet("background-color: #131511; color: white");
 }
+
+//Slots
+void MainWindow::navigateBack() {
+    if (page_layout->currentIndex() >= 1)
+        page_layout->setCurrentIndex(page_layout->currentIndex() - 1);
+}
+void MainWindow::navigateForward() {
+    if (page_layout->currentIndex() <= 2)
+        page_layout->setCurrentIndex(page_layout->currentIndex() + 1);
+}
+void MainWindow::sendSong2Player(PlaylistElement track_data) {
+    media_player->setTrack(track_data);
+}
+void MainWindow::sendPlaylist2Player(PlaylistElement selected_element, PlaylistData data) {
+    media_player->setPlaylist(data);
+    media_player->setPlaylistTrack(selected_element);
+}
 void MainWindow::queryFromAPI(std::string query) {
     SpotifyFlow flow;
     search_page->loadData(flow.searchByArtist(query), flow.searchByTrack(query));
     page_layout->setCurrentIndex(1);
 }
-
 void MainWindow::requestAlbumContent(PlaylistElement artist_data, ContentType type) {
     SpotifyFlow flow;
     album_page->loadData(ContentType::ALBUM, flow.searchAlbums(artist_data));
     page_layout->setCurrentIndex(2);
 };
-
 void MainWindow::requestTrackContent(PlaylistElement album_data, ContentType type) {
     SpotifyFlow flow;
     track_page->loadData(ContentType::TRACK, flow.searchAlbumsTracks(album_data));
     page_layout->setCurrentIndex(3);
 };
-
 void MainWindow::openFile() {
     QString allowed_file_extensions = "Playlist Files (*.playlist);;";
     QString file_name = QFileDialog::getOpenFileName(this, "Open File", QString(), allowed_file_extensions);
     if (!file_name.isEmpty()) {
-        playlist->loadData(file_name.toStdString());
+        PlaylistData playlist_data = PlaylistData::readPlaylist(file_name.toStdString().c_str());
+        playlist->loadData(playlist_data);
+        media_player->setPlaylist(playlist_data);
     }
 }
 void MainWindow::saveFile() {

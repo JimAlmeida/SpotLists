@@ -26,10 +26,6 @@ public:
 	void clearElements();
 	void buildGridLayout(int number_of_columns);
 
-public slots:
-	void addTrack();
-	void removeTrack();
-
 signals:
 	void elementSelected(PlaylistElement data);
 };

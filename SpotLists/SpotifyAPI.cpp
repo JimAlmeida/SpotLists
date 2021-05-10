@@ -62,7 +62,7 @@ QJsonDocument SpotifyAPI::getArtistTopTracks(std::string artist_id, std::string 
 	http_request->setHeader("Authorization", "Bearer " + bearer_token);
 
 	http_request->clearParameters();
-	http_request->addParameter("market", "BR");
+	http_request->addParameter("market", market);
 
 	http_request->enableHTTPS(true);
 
@@ -76,7 +76,7 @@ QJsonDocument SpotifyAPI::getArtistAlbums(std::string artist_id, std::string bea
 
 	http_request->clearParameters();
 	http_request->addParameter("market", market);
-
+	http_request->addParameter("limit", "50");
 	http_request->enableHTTPS(true);
 
 	QJsonDocument search_results = sendGetRequest();

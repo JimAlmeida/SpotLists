@@ -1,6 +1,7 @@
 #pragma once
 #include <qwidget.h>
-#include <QtMultimedia/qmediaplayer.h>
+#include <qmediaplayer.h>
+#include <qmediaplaylist.h>
 #include <qpushbutton.h>
 #include <qtoolbutton.h>
 #include <qlabel.h>
@@ -12,6 +13,7 @@
 #include <string>
 #include "SoundLoader.h"
 #include "MediaControls.h"
+#include "PlaylistData.h"
 
 class MusicPlayer: public QWidget {
 	Q_OBJECT
@@ -23,6 +25,9 @@ private:
 	QPushButton* add_track = nullptr;
 	QPushButton* remove_track = nullptr;
 
+	PlaylistData track_info_data;
+	QMediaPlaylist* played_songs = nullptr;
+	
 	PlaylistElementGUI* track_info = nullptr;
 	
 	void setPlayIcon();
@@ -34,11 +39,12 @@ private:
 	void setCustomStyle();
 
 public:
-	//These ones do.
 	MusicPlayer(QWidget* parent = nullptr);
 	MusicPlayer(PlaylistElement& track_data, QWidget* parent=nullptr);
 
 	void setTrack(PlaylistElement& track_data);
+	void setPlaylist(PlaylistData playlist);
+	void setPlaylistTrack(PlaylistElement data);
 
 signals:
 	void addTrackToPlaylist(PlaylistElement track_data);
@@ -47,4 +53,6 @@ signals:
 public slots:
 	void addTrack();
 	void removeTrack();
+	void setNextTrack();
+	void setPreviousTrack();
 };

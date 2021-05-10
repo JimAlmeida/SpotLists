@@ -7,6 +7,8 @@
 #include <QtCore/qtextstream.h>
 #include <algorithm>
 
+typedef std::vector<PlaylistElement>::const_iterator const_iterator;
+
 class PlaylistData {
 private:
 	std::vector<PlaylistElement> elements;
@@ -34,6 +36,10 @@ public:
 	static bool savePlaylist(const char* filename, PlaylistData& playlist);
 
 	void loadData(std::vector<PlaylistElement>& _elements);
+	inline const_iterator begin() { return elements.begin();}
+	inline const_iterator end() { return elements.end(); }
+	inline void erase(const_iterator pos) { elements.erase(pos); }
+	int findTrack(std::string track_id);
 	PlaylistElement& operator[](int i);
 	size_t size();
 };

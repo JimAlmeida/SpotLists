@@ -196,5 +196,9 @@ public:
 		return this->track_id == rhs.track_id && this->album_id == rhs.album_id && this->artist_id == rhs.artist_id;
 	}
 	inline bool operator!=(const PlaylistElement& rhs) { return !(*this == rhs); }
+	inline bool operator==(PlaylistElement& rhs) {
+		return this->track_id == rhs.track_id && this->album_id == rhs.album_id && this->artist_id == rhs.artist_id;
+	}
+	inline bool operator!=(PlaylistElement& rhs) { return !(*this == rhs); }
 };
 
