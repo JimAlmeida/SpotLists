@@ -3,10 +3,20 @@
 SpotifyFlow::SpotifyFlow() {
 	d = HTTPDispatcherFactory::createInstance();
 	r = HTTPRequestFactory::createInstance();
+	//About this token: Normally it is not wise to hard-code security tokens like the one below. 
+	//It is for this reason that the GitHub repository is private. 
+	//Either you store this in a environment variable or in a Key Vault like the Azure Key Vault.
+	//However since this is a closed project and there is an installer which packages the .exe and all .dlls
+	//I will leave this token as is.
 	api = new SpotifyAPI(d, r, "Basic NjJhMjE0ZTY0OWRjNDYxY2I4NGY3MDQxNjE3MWFkNTQ6NGQwNGVjNjhmZWEwNGQ3OTgxY2ZlNWVhMWJlYzRkMTM=");
 }
 
 SpotifyFlow::SpotifyFlow(IHTTPDispatcher* dispatcher, IHTTPRequest* request): d(dispatcher), r(request) {
+	//About this token: Normally it is not wise to hard-code security tokens like the one below. 
+	//It is for this reason that the GitHub repository is private. 
+	//Either you store this in a environment variable or in a Key Vault like the Azure Key Vault.
+	//However since this is a closed project and there is an installer which packages the .exe and all .dlls
+	//I will leave this token as is.
 	api = new SpotifyAPI(d, r, "Basic NjJhMjE0ZTY0OWRjNDYxY2I4NGY3MDQxNjE3MWFkNTQ6NGQwNGVjNjhmZWEwNGQ3OTgxY2ZlNWVhMWJlYzRkMTM=");
 }
 
