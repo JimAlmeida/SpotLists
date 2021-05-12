@@ -3,8 +3,6 @@
 TopBar::TopBar(QWidget* parent): QToolBar(parent)
 {
 	search_box = new QLineEdit();
-	search_by_track = new QRadioButton("Track");
-	search_by_artist = new QRadioButton("Artist");
 	std_label = "Search artists and tracks with this search box...";
 	logo_label = new QLabel(this);
 	open_file = new QToolButton(this);

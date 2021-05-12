@@ -1,12 +1,15 @@
 #pragma once
+#ifndef SPOTIFYFILTER_H
+#define SPOTIFYFILTER_H
 
 #include <string>
-#include <QtCore/qjsondocument.h>
-#include <QtCore/qjsonobject.h>
+
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonObject>
+
 #include "SpotifyFilter.h"
-#include "QtCore/qdebug.h"
-#include <QtCore/qjsonarray.h>
-#include <QtCore/qjsonobject>
 #include "PlaylistElement.h"
 
 class SpotifyFilter {
@@ -25,3 +28,4 @@ private:
 	static std::string filterAlbumInfo(QJsonObject& album, const char* info);
 	static std::string filterArtistInfo(QJsonObject& artist, const char* info);
 };
+#endif

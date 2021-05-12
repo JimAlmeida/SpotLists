@@ -1,10 +1,15 @@
 #pragma once
+#ifndef PLAYLISTWIDGET_H
+#define PLAYLISTWIDGET_H
+
+#include <QWidget>
+#include <QScrollArea>
+#include <QLabel>
+#include <QBoxLayout>
+
 #include "Playlist.h"
 #include "PlaylistData.h"
-#include <qwidget.h>
-#include <qscrollarea.h>
-#include <qlabel.h>
-#include <qboxlayout.h>
+
 
 class PlaylistWidget : public QWidget {
 	Q_OBJECT
@@ -38,3 +43,4 @@ signals:
 	void sendSongToPlayer(PlaylistElement data);
 	void sendPlaylistToPlayer(PlaylistElement selected_element, PlaylistData data);
 };
+#endif

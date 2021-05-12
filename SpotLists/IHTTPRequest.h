@@ -1,5 +1,6 @@
 #pragma once
-
+#ifndef IHTTPREQUEST_H
+#define IHTTPREQUEST_H
 #include <utility>
 #include "NetworkReply.h"
 #include <string>
@@ -50,3 +51,4 @@ public:
 
 	virtual void clearParameters() = 0;
 };
+#endif

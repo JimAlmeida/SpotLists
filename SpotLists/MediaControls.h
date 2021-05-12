@@ -1,13 +1,16 @@
 #pragma once
-#include <qwidget.h>
-#include <qmediaplayer.h>
-#include <qpushbutton.h>
-#include <qtoolbutton.h>
-#include <qlabel.h>
-#include <qslider.h>
-#include <qstyle.h>
-#include <qboxlayout.h>
-#include <qgridlayout.h>
+#ifndef MEDIACONTROLS_H
+#define MEDIACONTROLS_H
+
+#include <QWidget>
+#include <QMediaPlayer>
+#include <QPushButton>
+#include <QToolButton>
+#include <QLabel>
+#include <QSlider>
+#include <QStyle>
+#include <QBoxLayout>
+#include <QGridLayout>
 #include "PlaylistElementGUI.h"
 #include <string>
 #include "SoundLoader.h"
@@ -60,3 +63,4 @@ signals:
 	void nextTrack();
 	void previousTrack();
 };
+#endif // !MEDIACONTROLS_H

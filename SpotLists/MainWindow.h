@@ -1,16 +1,15 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#include <QtWidgets/QMainWindow>
-#include <QtWidgets/qlabel.h>
-#include <QtWidgets/qtextbrowser.h>
-#include <qfuture.h>
-#include <qfuturewatcher.h>
-#include <qdockwidget.h>
-#include <qstackedlayout.h>
-#include <qtoolbar.h>
-#include <qfiledialog.h>
-#include <qguiapplication.h>
-#include <qscreen.h>
+
+#include <QMainWindow>
+#include <QLabel>
+#include <QTextBrowser>
+#include <QDockWidget>
+#include <QStackedLayout>
+#include <QToolbar>
+#include <QFileDialog>
+#include <QGuiApplication>
+#include <QScreen>
 
 #include "SearchPage.h"
 #include "ContentPage.h"

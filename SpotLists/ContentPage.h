@@ -1,9 +1,9 @@
 #ifndef CONTENTPAGE_H
 #define CONTENTPAGE_H
 
-#include <qwidget.h>
-#include <qlabel.h>
-#include <qscrollarea.h>
+#include <QWidget>
+#include <QLabel>
+#include <QScrollArea>
 #include "PlaylistElement.h"
 #include "PlaylistElementGUI.h"
 #include "Playlist.h"

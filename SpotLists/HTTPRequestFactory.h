@@ -1,5 +1,7 @@
 #pragma once
 
+#ifndef HTTPREQUESTFACTORY_H
+#define HTTPREQUESTFACTORY_H
 #include "IHTTPRequest.h"
 #include "CURLRequest.h"
 
@@ -13,3 +15,4 @@ public:
 		return new CURLRequest();
 	}
 };
+#endif

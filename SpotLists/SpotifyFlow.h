@@ -1,4 +1,6 @@
 #pragma once
+#ifndef SPOTIFYFLOW_H
+#define SPOTIFYFLOW_H
 
 #include "SpotifyAPI.h"
 #include "SpotifyFilter.h"
@@ -24,3 +26,4 @@ public:
 	std::vector<PlaylistElement> searchAlbumsTracks(PlaylistElement& element);
 	std::string obtainToken();
 };
+#endif

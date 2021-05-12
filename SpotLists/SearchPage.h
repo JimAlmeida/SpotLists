@@ -1,12 +1,18 @@
 #pragma once
-#include <qwidget.h>
+
+#ifndef SEARCHPAGE_H
+#define SEARCHPAGE_H
 #include <vector>
+
+#include <QWidget>
+#include <QScrollArea>
+
 #include "PlaylistElementGUI.h"
 #include "PlaylistElement.h"
 #include "Playlist.h"
 #include "PlaylistData.h"
 #include "ContentPage.h"
-#include <qscrollarea.h>
+
 
 class SearchPage : public QWidget {
 	Q_OBJECT
@@ -39,3 +45,4 @@ signals:
 	//This signal requests the MainWindow to load a track into the Media Player.
 	void sendSongToPlayer(PlaylistElement data);
 };
+#endif

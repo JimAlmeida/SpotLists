@@ -1,5 +1,6 @@
 #pragma once
-
+#ifndef HTTPDISPATCHERFACTORY_H
+#define HTTPDISPATCHERFACTORY_H
 #include "IHTTPDispatcher.h"
 #include "CURLDispatcher.h"
 
@@ -13,3 +14,4 @@ public:
 		return new CURLDispatcher();
 	}
 };
+#endif

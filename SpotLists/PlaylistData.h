@@ -1,11 +1,14 @@
 #pragma once
+#ifndef PLAYLISTDATA_H
+#define PLAYLISTDATA_H
 
-#pragma once
-#include "PlaylistElement.h"
 #include <vector>
-#include <QtCore/qfile.h>
-#include <QtCore/qtextstream.h>
 #include <algorithm>
+
+#include <QFile>
+#include <QTextStream>
+
+#include "PlaylistElement.h"
 
 typedef std::vector<PlaylistElement>::const_iterator const_iterator;
 
@@ -36,10 +39,13 @@ public:
 	static bool savePlaylist(const char* filename, PlaylistData& playlist);
 
 	void loadData(std::vector<PlaylistElement>& _elements);
+	int findTrack(std::string track_id);
+
+	//functions to give STL Vector-like behaviour
 	inline const_iterator begin() { return elements.begin();}
 	inline const_iterator end() { return elements.end(); }
 	inline void erase(const_iterator pos) { elements.erase(pos); }
-	int findTrack(std::string track_id);
 	PlaylistElement& operator[](int i);
 	size_t size();
 };
+#endif

@@ -1,9 +1,13 @@
 #pragma once
+#ifndef PLAYLISTELEMENT_H
+#define PLAYLISTELEMENT_H
+
 #include <string>
 #include <exception>
-#include <QtCore/qjsonarray.h>
-#include <QtCore/qjsondocument.h>
-#include <QtCore/qjsonobject.h>
+
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonDocument>
 
 struct SpotifyImage {
 	std::string large_image;
@@ -201,4 +205,5 @@ public:
 	}
 	inline bool operator!=(PlaylistElement& rhs) { return !(*this == rhs); }
 };
+#endif
 

@@ -1,16 +1,22 @@
 #pragma once
-#include <qwidget.h>
-#include <qmediaplayer.h>
-#include <qmediaplaylist.h>
-#include <qpushbutton.h>
-#include <qtoolbutton.h>
-#include <qlabel.h>
-#include <qslider.h>
-#include <qstyle.h>
-#include <qboxlayout.h>
-#include <qgridlayout.h>
-#include "PlaylistElementGUI.h"
+
+#ifndef MUSICPLAYER_H
+#define MUSICPLAYER_H
+
 #include <string>
+
+#include <QWidget>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
+#include <QPushButton>
+#include <QToolButton>
+#include <QLabel>
+#include <QSlider>
+#include <QStyle>
+#include <QBoxLayout>
+#include <QGridLayout>
+
+#include "PlaylistElementGUI.h"
 #include "SoundLoader.h"
 #include "MediaControls.h"
 #include "PlaylistData.h"
@@ -56,3 +62,4 @@ public slots:
 	void setNextTrack();
 	void setPreviousTrack();
 };
+#endif

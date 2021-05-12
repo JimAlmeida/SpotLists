@@ -1,4 +1,6 @@
 #pragma once
+#ifndef CURLREQUEST_H
+#define CURLREQUEST_H
 #include "IHTTPRequest.h"
 #include <cpr/cpr.h>
 #include <string>
@@ -31,3 +33,4 @@ public:
 
 	void clearParameters() override;
 };
+#endif

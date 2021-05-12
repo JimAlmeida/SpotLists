@@ -1,6 +1,10 @@
 #pragma once
+#ifndef SPOTIFYAPI_H
+#define SPOTIFYAPI_H
 #include <string>
-#include <QtCore/qjsondocument.h>
+
+#include <QJsonDocument>
+
 #include "IHTTPDispatcher.h"
 #include "IHTTPRequest.h"
 
@@ -23,4 +27,5 @@ public:
 	QJsonDocument getTrack(std::string track_id, std::string bearer_token, std::string market = "BR");
 	
 };
+#endif
 

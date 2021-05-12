@@ -1,10 +1,14 @@
 #pragma once
-#include <QtWidgets/QWidget>
-#include <QtWidgets/QLabel>
+#ifndef PLAYLISTELEMENTGUI_H
+#define PLAYLISTELEMENTGUI_H
+
+#include <QFont>
+#include <QLabel>
+#include <QWidget>
+#include <QBoxLayout>
+#include <QGridLayout>
+
 #include "ImageLoader.h"
-#include <QtWidgets/qboxlayout.h>
-#include <QtWidgets/qgridlayout.h>
-#include <qfont.h>
 #include "PlaylistElement.h"
 
 class PlaylistElementGUI: public QWidget {
@@ -40,3 +44,4 @@ signals:
 	void onSelected(PlaylistElement data);
 
 };
+#endif

@@ -1,24 +1,24 @@
 #pragma once
-#include <qwidget.h>
-#include <QtMultimedia/qmediaplayer.h>
-#include <qpushbutton.h>
-#include <qtoolbutton.h>
-#include <qradiobutton.h>
-#include <qlabel.h>
-#include <qslider.h>
-#include <qstyle.h>
-#include <qboxlayout.h>
-#include <qgridlayout.h>
-#include <qlineedit.h>
-#include <qtoolbar.h>
+#ifndef TOPBAR_H
+#define TOPBAR_H
+
 #include <string>
+
+#include <QWidget>
+#include <QMediaPlayer>
+#include <QToolButton>
+#include <QLabel>
+#include <QStyle>
+#include <QBoxLayout>
+#include <QGridLayout>
+#include <QLineEdit>
+#include <QToolBar>
+
 
 class TopBar: public QToolBar {
 	Q_OBJECT;
 private:
 	QLineEdit* search_box = nullptr;
-	QRadioButton* search_by_track = nullptr;
-	QRadioButton* search_by_artist = nullptr;
 	QLabel* logo_label = nullptr;
 	QString std_label;
 
@@ -41,3 +41,4 @@ signals:
 	void goBack();
 	void goForward();
 };
+#endif
