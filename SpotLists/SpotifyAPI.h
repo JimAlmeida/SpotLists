@@ -4,7 +4,7 @@
 #include <string>
 
 #include <QJsonDocument>
-
+#include <QDebug>
 #include "IHTTPDispatcher.h"
 #include "IHTTPRequest.h"
 

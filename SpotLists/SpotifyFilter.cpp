@@ -56,7 +56,7 @@ std::vector<PlaylistElement> SpotifyFilter::filterSearchTrackEndpoint(QJsonDocum
 
 	return elements;
 }
-std::vector<PlaylistElement> SpotifyFilter::filterGetArtistAlbumsEndpoint(QJsonDocument api_response, PlaylistElement& pl = PlaylistElement()) {
+std::vector<PlaylistElement> SpotifyFilter::filterGetArtistAlbumsEndpoint(QJsonDocument api_response, PlaylistElement& pl) {
 	QJsonArray albums = api_response["items"].toArray();
 	std::vector<PlaylistElement> elements(albums.size());
 
@@ -78,7 +78,7 @@ std::vector<PlaylistElement> SpotifyFilter::filterGetArtistAlbumsEndpoint(QJsonD
 	}
 	return elements;
 }
-std::vector<PlaylistElement> SpotifyFilter::filterGetAlbumTracksEndpoint(QJsonDocument api_response, PlaylistElement& pl = PlaylistElement()) {
+std::vector<PlaylistElement> SpotifyFilter::filterGetAlbumTracksEndpoint(QJsonDocument api_response, PlaylistElement& pl) {
 	QJsonArray tracks = api_response["items"].toArray();
 	std::vector<PlaylistElement> elements(tracks.size());
 

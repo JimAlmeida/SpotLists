@@ -2,6 +2,7 @@
 #ifndef PLAYLISTWIDGET_H
 #define PLAYLISTWIDGET_H
 
+#include <QDebug>
 #include <QWidget>
 #include <QScrollArea>
 #include <QLabel>

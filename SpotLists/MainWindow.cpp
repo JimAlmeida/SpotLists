@@ -115,7 +115,7 @@ void MainWindow::requestTrackContent(PlaylistElement album_data, ContentType typ
     page_layout->setCurrentIndex(3);
 };
 void MainWindow::openFile() {
-    QString allowed_file_extensions = "Playlist Files (*.playlist);;";
+    QString allowed_file_extensions = "All Files(*);;Playlist Files (*.playlist);;";
     QString file_name = QFileDialog::getOpenFileName(this, "Open File", QString(), allowed_file_extensions);
     if (!file_name.isEmpty()) {
         PlaylistData playlist_data = PlaylistData::readPlaylist(file_name.toStdString().c_str());
@@ -124,7 +124,7 @@ void MainWindow::openFile() {
     }
 }
 void MainWindow::saveFile() {
-    QString allowed_file_extensions = "Playlist Files (*.playlist);;";
+    QString allowed_file_extensions = "All Files(*);;Playlist Files (*.playlist);;";
     QString file_name = QFileDialog::getSaveFileName(this, "Save File", QString(), allowed_file_extensions);
     if (!file_name.isEmpty()) {
         playlist->saveData(file_name.toStdString());

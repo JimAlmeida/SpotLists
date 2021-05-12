@@ -112,13 +112,13 @@ void MediaControls::connections()
 //Public Functions
 void MediaControls::setTrack(PlaylistElement& track_data)
 {
-	qDebug() << track_data.display().c_str();
+	//qDebug() << track_data.display().c_str();
 	player->setMedia(QUrl(track_data.sample_url.c_str()));
 }
 
 //Slots
 void MediaControls::sliderValueChanged(int value) {
-	qDebug() << "My value is: " << value << "And my duration: " << player->position();
+	//qDebug() << "My value is: " << value << "And my duration: " << player->position();
 	if (value / 100 != player->position() / 100) {
 		player->setPosition(value);
 	}

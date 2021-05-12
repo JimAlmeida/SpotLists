@@ -182,14 +182,16 @@ namespace GUITests {
     }
     Playlist* PlaylistArray() {
         Playlist* my_playlist = new Playlist();
-        my_playlist->loadData(BETests::FlowTest10());
+        PlaylistData data = BETests::FlowTest10();
+        my_playlist->loadData(data);
         my_playlist->setMinimumSize(my_playlist->sizeHint());
         my_playlist->buildGridLayout(4);
         return my_playlist;
     }
     Playlist* PlaylistArray2() {
         Playlist* my_playlist = new Playlist();
-        my_playlist->loadData(BETests::FlowTest9());
+        PlaylistData data = BETests::FlowTest9();
+        my_playlist->loadData(data);
         my_playlist->setMinimumSize(my_playlist->sizeHint());
         my_playlist->buildListLayout();
         return my_playlist;

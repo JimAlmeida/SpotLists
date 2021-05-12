@@ -6,7 +6,7 @@
 #include <QTextBrowser>
 #include <QDockWidget>
 #include <QStackedLayout>
-#include <QToolbar>
+#include <QToolBar>
 #include <QFileDialog>
 #include <QGuiApplication>
 #include <QScreen>

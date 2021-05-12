@@ -50,7 +50,7 @@ NetworkReply CURLDispatcher::get(IHTTPRequest* r) {
 			auto holder = cpr::CurlHolder();
 
 			for (auto& _p : _parameters) {
-				p.AddParameter(cpr::Parameter(_p.first, _p.second), holder);
+				p.AddParameter(cpr::Parameter(std::move(_p.first), std::move(_p.second)), holder);
 			}
 
 			session.SetParameters(p);

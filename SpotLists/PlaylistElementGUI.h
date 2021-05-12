@@ -3,6 +3,7 @@
 #define PLAYLISTELEMENTGUI_H
 
 #include <QFont>
+#include <QDebug>
 #include <QLabel>
 #include <QWidget>
 #include <QBoxLayout>

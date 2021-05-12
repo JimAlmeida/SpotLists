@@ -31,7 +31,7 @@ PlaylistData PlaylistData::readPlaylist(const char* filename) {
 	QJsonArray items = root["items"].toArray();
 
 	std::vector<PlaylistElement> _elements;
-	for (auto& item : items) {
+	for (auto item : items) {
 		_elements.push_back(PlaylistElement::fromJson(item.toObject()));
 	}
 
@@ -105,7 +105,7 @@ PlaylistData PlaylistData::fromJson(QJsonDocument& data) {
 	std::string playlist_name = root["playlist_name"].toString().toStdString();
 
 	std::vector<PlaylistElement> _elements;
-	for (auto& item : items) {
+	for (auto item : items) {
 		_elements.push_back(PlaylistElement::fromJson(item.toObject()));
 	}
 
