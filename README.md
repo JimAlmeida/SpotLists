@@ -27,7 +27,34 @@ Procedures:
 10. Build the solution.
 
 PS: Though sharing the .sln folder would somewhat cut down on these steps, I cannot guarantee at this moment that this approach will indeed work.
+##### Linux OS (as tested in Ubuntu)
+1. Open your terminal and install all of the following dependencies:
+```shell
+sudo apt install qt5-default
+sudo apt install g++
+sudo apt install git
+sudo apt install cmake
+sudo apt install openssl
+sudo apt install libssl-dev
+sudo apt install qtmultimedia5-dev
+sudo apt install libqt5multimedia5-plugins
+```
+Some of these dependencies may seem redundant, but they are in place in case of an attempt to compile this project after a clean distro install.
 
+2. Clone this repository or download the source files from this repository's website page.
+3. Run CMake over the CMakeLists.txt file in the source folder.
+```shell
+cmake CMakeLists.txt
+```
+4. After CMake completes generating the Makefile, compile the project with make:
+```shell
+make
+```
+5. Don't forget to install the font Tw Cen MT Condensed, which is located in the *fonts* folder.
+6. After a successful compilation, run Spotlists with (assuming you are in the same directory as the executable):
+```shell
+./Spotlists
+```
 ## Class Diagrams
 Back-End classes:
 ![](https://imgur.com/AiNyZJW.png)
