@@ -1,4 +1,5 @@
 #pragma once
+#include <QDebug>
 #include <cpr/cpr.h>
 #include "CURLDispatcher.h"
 #include "CURLRequest.h"
@@ -17,6 +18,12 @@
 #include "ContentPage.h"
 
 namespace BETests {
+    void HTTPSTest() {
+        cpr::Response r = cpr::Get(cpr::Url{ "https://www.google.com" });
+        qDebug() << r.status_code;
+        qDebug() << r.text.c_str();
+        qDebug() << r.raw_header.c_str();
+    }
     PlaylistElement FlowTest1(){
         /// <summary>
         /// Use case: User submits a query.

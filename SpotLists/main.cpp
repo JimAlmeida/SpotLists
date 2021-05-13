@@ -18,6 +18,7 @@
 
 int main(int argc, char *argv[])
 {
+    BETests::HTTPSTest();
     QCoreApplication::addLibraryPath(".");
     QApplication a(argc, argv);
     a.setStyle("Fusion");

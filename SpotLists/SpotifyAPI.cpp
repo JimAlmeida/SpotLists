@@ -6,16 +6,19 @@ SpotifyAPI::SpotifyAPI(IHTTPDispatcher* d, IHTTPRequest* hr, std::string e_auth)
 QJsonDocument SpotifyAPI::sendGetRequest() {
 	NetworkReply r = dispatcher->get(http_request);
 	QString body = QString(r.content.c_str());
-	//qDebug() << "API Response:";
-	//qDebug() << body;
+	qDebug() << "API Response:";
+	qDebug() << body;
 	return QJsonDocument::fromJson(body.toUtf8());
 }
 
 QJsonDocument SpotifyAPI::sendPostRequest() {
 	NetworkReply r = dispatcher->post(http_request);
+
 	QString body = QString(r.content.c_str());
-	//qDebug() << "API Response:";
-	//qDebug() << body;
+	QString header = QString(r.header.c_str());
+	qDebug() << "Body: " << body;
+	qDebug() << "Header: " << header;
+
 	return QJsonDocument::fromJson(body.toUtf8());
 }
 
