@@ -17,16 +17,11 @@ if(CMAKE_VERSION VERSION_LESS "3.7.0")
     set(CMAKE_INCLUDE_CURRENT_DIR ON)
 endif()
 
-list(APPEND CMAKE_PREFIX_PATH "C:/Qt/5.15.2/msvc2019_64")
-
 find_package(Qt5 COMPONENTS Core REQUIRED)
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt5 COMPONENTS Gui REQUIRED)
 find_package(Qt5 COMPONENTS Network REQUIRED)
 find_package(Qt5 COMPONENTS Multimedia REQUIRED)
-
-#include "SpotifyAPI.h"
-#include "SpotifyFilter.h"
 
 add_executable(
 	Spotlists
